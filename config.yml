@@ -1,0 +1,482 @@
+proxy_list: https://free-proxy-list.net/index.html # website with free proxies
+max_proxies: 5 # max number of proxies in rotation
+ip_check: https://httpbin.org/ip # website to check proxy connection
+uagents: useragents.txt # file in CWD with useragents
+headers: # non-useragent headers
+  accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+  accept-encoding: gzip, deflate, br
+  accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+  cache-control: max-age=0
+  sec-fetch-mode: navigate
+  sec-fetch-site: none
+  sec-fetch-user: '?1'
+  upgrade-insecure-requests: '1'
+data_file: data.xlsx
+products: # Amazon ASINs
+- name: CR2032
+  asins:
+    - B01M19WJ86
+    - B00N46RDUM
+    - B004AT066A
+    - B0042KOJRE
+    - B00MX89NJG
+    - B00CMQDE26
+    - B016E6N3AW
+    - B008XBL34A
+    - B07NXRC5PZ
+    - B01418Y9QW
+    - B01418SBB6
+    - B01418SLO8
+    - B01418SRMO
+    - B01418T0DE
+    - B004W5PDGK
+    - B002U00ZNK
+    - B00656235S
+    - B00K62Y2O2
+    - B007VGF5VK
+    - B01MZ2RGI4
+    - B00REWNF2M
+    - B06ZZLDQ5T
+    - B015JR47T8
+    - B00005T3DV
+    - B07G7KRQQ5
+    - B009108SGS
+    - B00NO13Q0I
+    - B0043CE8VS
+    - B00D8P5T0U
+    - B0042A9UXC
+    - B0002RID4G
+    - B01CJ53E0G
+    - B01N6PLV2G
+    - B00VOFE51K
+    - B01FMWDTDU
+    - B07FLP8XTN
+- name: AA
+  asins:
+    - B07NVTGRVZ
+    - B00O869KJE
+    - B00NTCH52W
+    - B00MNV8E0C
+    - B01B8R6PF2
+    - B002YEQW5C
+    - B00000JHQ6
+    - B000IZQO7U
+    - B003CZX4A8
+    - B00EFR18Q4
+    - B003SIOZB6
+    - B002UXRXEG
+    - B0035LCFNQ
+    # missing 32 count Duracell AA batteries
+    - B07DY89QMT
+    - B00CXQK24S
+    - B078KNSH2Z
+    - B078KHTFVN
+    # 96 count Fuji batteries only available for AAA
+    - B0000A1R44
+    - B00XWP91KA
+    - B00LHSAARW
+    - B00CFPLI90
+    - B006QZCR5O
+    - B01FVPQDUE
+    - B07JY6Y2KP
+    - B00451SSBI
+    - B003STJFLA
+    - B07SVQ2ZHN
+    - B01DOO70NS
+    - B004RFF57C
+    - B01DKWPPVI
+    - B005GIQXCU
+    - B004U429AQ
+    - B004E3IARO
+    - B079GXSFPB
+    - B0721TPTGV
+    - B00KMDL8U6
+- name: AAA
+  asins:
+    - B00000JHQ0
+    - B00A4BBCIE
+    - B004M7YC8S
+    - B00005T3E4
+    - B000HI6CEI
+    - B00006AG1F
+    - B006CSQXLO
+    - B002UXRXE6
+    - B004K95PBQ
+    - B07NVWVCCL
+    - B00O869QUC
+    - B00NTCHCU2
+    - B00LH3DMUO
+    - B01B8R6V2E
+    - B00BJ9AN5I
+    - B0000A289X
+    - B00D9QK4JE
+    - B00COWFJ8K
+    - B007NCCDG2
+    - B00XWP9H90
+    - B06XSKY4P2
+    - B00FF8KQJC
+    - B009PPR5OU
+   # - quant: 48
+   # - quant: 60
+   # - quant: 100
+    - B00451UL8G
+    - B004U42A28
+    - B00008XPN0
+    - B007YASGWS
+    - B07FFFJ17W
+    - B079GS4YQS
+- name: 9V
+  asins:
+    - B0774D64LT
+   # - quant: 8
+    - B000K2NW08
+   # - quant: 2
+   # - quant: 4
+    - B07VRPT544
+    - B00G06TYQE
+    - B00003IE4E
+   # - quant: 4
+    - B01AVK3NMU
+    - B000099SKB
+    - B00MNS65C4
+    - B01IRRP1G0
+    - B009PPE9L2
+    - B00THDSP30
+    - B00099YMCY
+    - B003XVUIXC
+    - B00008MOQ5
+    - B0057WOHVY
+- name: Coffee
+  asins:
+    - B073CVZ9GZ
+    - B071GC5RBP
+    - B07219FJ8J
+    - B07Z6F5CMG
+    - B00I8GCF9C
+    - B00I8GC9E8
+    - B014PINKKE
+    - B0049IK6OY
+   # - quant: 170 oz.
+    - B077BZ8MCT
+   # - quant: 255 oz.
+    - B009HSNDI2
+    - B07B9BJB2S
+    - B00FQJOC8G
+    - B07FY4FHFY
+    - B07B3J5XYQ
+   # - quant: 90 oz.
+   # - quant: 160 oz.
+    - B00QF901YK
+    - B07CZW2CG5
+    - B06ZZLTR2N
+    - B017N9KX0C
+    - B074P7C75F
+    - B00IYNM2CY
+    - B0154AVVSK
+    - B01HTUY2NY
+    - B06X1BKVJX
+    - B078N5T7HG
+    - B07CMCLT3X
+    - B0787G1KXC
+    - B009LI5CCS
+    - B079NKR8DP
+    - B07DDVF18X
+    - B079TR46SP
+   # - quant: 240 oz.
+- name: Facial Tissues
+  asins:
+    - B07DGT64VT
+   # - quant: 2880
+    - B07FT7LGPM
+    - B07DGT5ZVX
+    - B07N15XP6P
+    - B07DTGLCSS
+    - B07DTVC4YT
+    - B07DTNX5W5
+    - B07DTVFDNY
+    - B07DTDK7V6
+    - B07F6MQP9T
+    - B00L1Q9J54
+    - B072FTWMVD
+    - B00494R8DA
+    - B003ZUQ7VS
+   # - quant: =24*124
+    - B01K087I8I
+    - B07D1CWJDH
+    - B07V7J6KW8
+    - B01LYK86SB
+    - B07HSF5HTX
+    - B07V4GP412
+    - B010OVVVLG
+    - B07HSF2BXB
+    - B01CODD7S2
+    - B01CV3DB2W
+    - B00CY9R8F0
+    - B07NMZNGKF
+    - B00NPJERNE
+    - B07NQNRXZY
+    - B07QZF3B87
+    - B07NN16GMT
+- name: Shampoo
+  asins:
+    - B0071XOWAS
+    - B006L21PNW
+    - B000NNQ512
+   # - quant: 47.4 oz.
+    - B019GMWIOS
+   # - quant: 94.8 oz.
+    - B012U0UNFO
+    - B012U0UQG0
+    - B00BX6VCPW
+    - B07FTGWYDY
+    - B06Y1SXJWG
+    - B003USK3BA
+    - B003QYR6UY
+    - B003KVMS24
+    - B076BS5XVN
+    - B01MRIJ7IQ
+    - B01MY1IIFG
+    - B076BM9JZX
+    - B01M2DNKV7
+    - B005VMHYVU
+    - B06WVBYLNB
+    - B06W55SB3Q
+    - B016WWLVMK
+    - B0077NXH7Q
+    - B01M6D5GKX
+    - B07F38LXDM
+- name: Razor Blades
+  asins:
+    - B003BVINRC
+    - B06WGWHC68
+    - B00I1F2I3I
+    - B078Q95G7Z
+    - B06W2PBGFB
+    - B06X95CLX1
+    - B06X1F5Y7V
+    - B06X9NWGBX
+    - B000GCP28W
+    - B000BUUVTY
+    - B001JQLNHS
+    - B076BZZPL4
+    - B00E4MQK04
+    - B00070QF16
+    - B079Z9JQX7
+   # - quant: 48
+    - B00SV9AUVG
+   # - quant: 52
+   # - quant: 104
+- name: Soap
+  asins:
+    - B01BS59A6A
+   # - quant: 6.3 oz.
+   # - quant: 9.45 oz.
+   # - quant: 12.6 oz.
+   # - quant: 15.75 oz.
+   # - quant: 18.9 oz.
+    - B004SNHP3A
+   # - quant: 31.5 oz.
+    - B00I69SBZ8
+    - B01N36X33D
+    - B005HO0AR2
+    - B01JIRL18A
+    - B079DD5J9M
+   # - quant: 16.2 oz.
+    - B000VB0C1K
+    - B00W4TWDL4
+    - B01IA9C3TI
+    - B01KCJE874
+   # - quant: 90 oz.
+   # - quant: 126 oz.
+    - B077G4N5YX
+   # - quant: 216 oz.
+    - B0087W54A4
+    - B000VAWY7Q
+    - B01IAF26IA
+    - B001TSLWL8
+    - B010AIL6ZO
+    - B01IAF2FH2
+    - B005JRGH0G
+    - B00523A8Q6
+- name: Plant Fertilizer
+  asins:
+    - B015KZCBJC
+   # - quant: 10 oz.
+   # - quant: 20 oz.
+    - B005BV29D4
+    - B003SHEDQY
+    - B0034LPWVY
+    - B002PY3PPQ
+    - B018H2BBX2
+    - B07BN1TKVM
+    - B06ZYYN6LD
+    - B07N1VKY35
+    - B01CI33HL0
+    - B07S17QC41
+    - B078H3MP47
+    - B01M7P2SBQ
+    - B07QRYHXPJ
+    - B07QSYZRP1
+    - B000F6XGZ0
+    - B00GWJRU38
+    - B000P6QYJK
+   # - quant: 2 lb.
+   # - quant: 3 lb.
+   # - quant: 5 lb.
+    - B07DR32CMB
+- name: Grass Seed
+  asins:
+    - B01KBYTEY2
+   # - quant: 2 lb.
+   # - quant: 3 lb.
+   # - quant: 7 lb.
+   # - quant: 25 lb.
+    - B07Q4QW61K
+    - B004QB0AHC
+   # - quant: 20 lb.
+    - B07B4WSZT1
+   # - quant: 8 lb.
+   # - quant: 18 lb.
+    - B00NHOZ3QC
+   # - quant: 7 lb.
+   # - quant: 20 lb.
+   # - quant: 40 lb
+    - B07SM141CR
+   # - quant: 7 lb.
+   # - quant: 20 lb.
+- name: Paper
+  asins:
+    - B004SU52JW
+    - B00CHUFYNY
+    - B009NKSNOI
+    - B000CD0U82
+    - B01FV0F8H8
+   # - quant: 1500
+   # - quant: 2500
+   # - quant: 4000
+   # - quant: 5000
+    - B00007E7RI
+   # - quant: 4000
+   # - quant: 5000
+   # - quant: 200000
+   # - quant: 4200000
+    - B0090YJBYS
+   # - quant: 1500
+   # - quant: 2500
+   # - quant: 5000
+   # - quant: 200000
+    - B01NAQ3Y6D
+   # - quant: 1500
+   # - quant: 2500
+   # - quant: 5000
+   # - quant: 200000
+    - B00IVOMMHQ
+   # - quant: 1500
+   # - quant: 2400
+   # - quant: 3000
+   # - quant: 200000
+   # - quant: 4200000
+   # - quant: None
+- name: Pens
+  asins:
+    - B019QBOAH2
+    - B019QBOG3U
+    - B019QBOG44
+   # - quant: 28
+   # - quant: 40
+   # - quant: 42
+   # - quant: 60
+    - B01EB75NY0
+   # - quant: 24
+   # - quant: 36
+   # - quant: 48
+   # - quant: 72
+   # - quant: 96
+   # - quant: 120
+    - B002JP1AH6
+   # - quant: 9
+    - B001CRVUPE
+    - B001GAOTSW
+   # - quant: 2
+   # - quant: 4
+   # - quant: 5
+   # - quant: 8
+   # - quant: 10
+   # - quant: 12
+   # - quant: 36
+   # - quant: 48
+   # - quant: 144
+    - B000GATVZE
+   # - quant: 72
+    - B00347A8NK
+    - B0012YVGOW
+   # - quant: 120
+    - B06WGMTMVM
+- name: Envelopes
+  asins:
+    - B003BLQHXO
+    - B008005REQ
+    - B003BLQHZ2
+    - B078MWJ9Q2
+   # - quant: 240
+   # - quant: 320
+   # - quant: 400
+    - B078MSLGGP
+    - B06X6B39G3
+   # - quant: 300
+    - B01D0OANU4
+   # - quant: 500
+    - B001U2ORNS
+    - B00Q1W2B7Q
+   # - quant: 160
+    - B004E2PHTE
+    - B01FT472UM
+    - B01HQT2SDY
+    - B00O7UGNE6
+    - B07DWKT5PN
+    - B07WS6WDNK
+    - B07GJKFC5X
+    - B07GJCSF8Z
+- name: Motor Oil
+  asins:
+    - B07CFMZ1F5
+   # - quant: 6 QT
+    - B00GDH5M1G
+   # - quant: 5 QT
+   # - quant: 6 QT
+   # - quant: 15 QT
+    - B00GDH0GDA
+   # - quant: 5 QT
+   # - quant: 6 QT
+   # - quant: 15 QT
+    - B00TS9ZYWI
+   # - quant: 6 QT
+   # - quant: 15 QT
+   # - quant: 24 QT
+    - B01536SWCS
+    - B01MEGK821
+    - B00CBT5HZ6
+    - B003AVYQ24
+    - B01MDNX84L
+    - B00CQ3B0RQ
+- name: Light Bulbs
+  asins:
+    - B07JLZN1RM
+   # - quant: 6
+   # - quant: 16
+   # - quant: 24
+    - B0758GXHQK
+   # - quant: 12
+   # - quant: 24
+    - B071VFHXSY
+   # - quant: 16
+    - B00P6XVHX0
+   # - quant: 12
+    - B07QV9XLTK
+   # - quant: 2
+   # - quant: 4
+    - B01MXLLHDZ
+   # - quant: 4
+   # - quant: 6
+    - B07KK93VD9
+    - B07RPQNP96
