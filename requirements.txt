@@ -2,4 +2,4 @@ beautifulsoup4==4.6.3
 requests==2.21.0
 openpyxl==3.0.1
 pandas==0.24.2
-PyYAML==3.13
+PyYAML==5.1
