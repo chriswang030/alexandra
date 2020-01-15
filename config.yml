@@ -26,31 +26,31 @@ products: # Amazon ASINs
     - B07NXRC5PZ
     - B01418Y9QW
     - B01418SBB6
-    - B01418SLO8
-    - B01418SRMO
-    - B01418T0DE
-    - B004W5PDGK
-    - B002U00ZNK
-    - B00656235S
-    - B00K62Y2O2
-    - B007VGF5VK
-    - B01MZ2RGI4
-    - B00REWNF2M
-    - B06ZZLDQ5T
-    - B015JR47T8
-    - B00005T3DV
-    - B07G7KRQQ5
-    - B009108SGS
-    - B00NO13Q0I
-    - B0043CE8VS
-    - B00D8P5T0U
-    - B0042A9UXC
-    - B0002RID4G
-    - B01CJ53E0G
-    - B01N6PLV2G
-    - B00VOFE51K
-    - B01FMWDTDU
-    - B07FLP8XTN
+    # - B01418SLO8
+    # - B01418SRMO
+    # - B01418T0DE
+    # - B004W5PDGK
+    # - B002U00ZNK
+    # - B00656235S
+    # - B00K62Y2O2
+    # - B007VGF5VK
+    # - B01MZ2RGI4
+    # - B00REWNF2M
+    # - B06ZZLDQ5T
+    # - B015JR47T8
+    # - B00005T3DV
+    # - B07G7KRQQ5
+    # - B009108SGS
+    # - B00NO13Q0I
+    # - B0043CE8VS
+    # - B00D8P5T0U
+    # - B0042A9UXC
+    # - B0002RID4G
+    # - B01CJ53E0G
+    # - B01N6PLV2G
+    # - B00VOFE51K
+    # - B01FMWDTDU
+    # - B07FLP8XTN
 - name: AA
   asins:
     - B07NVTGRVZ
@@ -116,7 +116,7 @@ products: # Amazon ASINs
     - B06XSKY4P2
     - B00FF8KQJC
     - B009PPR5OU
-   # - quant: 48
+    - B00YMSORX2
    # - quant: 60
    # - quant: 100
     - B00451UL8G
@@ -128,14 +128,14 @@ products: # Amazon ASINs
 - name: 9V
   asins:
     - B0774D64LT
-   # - quant: 8
+    - B07JQWZ31Q
     - B000K2NW08
-   # - quant: 2
-   # - quant: 4
+    - B073Y12FFF
+    - B000K2NW08
     - B07VRPT544
     - B00G06TYQE
     - B00003IE4E
-   # - quant: 4
+    - B00003IE4G
     - B01AVK3NMU
     - B000099SKB
     - B00MNS65C4
@@ -156,15 +156,15 @@ products: # Amazon ASINs
     - B00I8GC9E8
     - B014PINKKE
     - B0049IK6OY
-   # - quant: 170 oz.
+    - B07YB3P2G4
     - B077BZ8MCT
-   # - quant: 255 oz.
+    - B07YB44DP2
     - B009HSNDI2
     - B07B9BJB2S
     - B00FQJOC8G
     - B07FY4FHFY
     - B07B3J5XYQ
-   # - quant: 90 oz.
+    - B07XCY26MT
    # - quant: 160 oz.
     - B00QF901YK
     - B07CZW2CG5
@@ -185,8 +185,8 @@ products: # Amazon ASINs
    # - quant: 240 oz.
 - name: Facial Tissues
   asins:
+    - B07YVPR3PM
     - B07DGT64VT
-   # - quant: 2880
     - B07FT7LGPM
     - B07DGT5ZVX
     - B07N15XP6P
@@ -200,7 +200,7 @@ products: # Amazon ASINs
     - B072FTWMVD
     - B00494R8DA
     - B003ZUQ7VS
-   # - quant: =24*124
+    - B01N9I4EP6
     - B01K087I8I
     - B07D1CWJDH
     - B07V7J6KW8
@@ -262,20 +262,20 @@ products: # Amazon ASINs
     - B00E4MQK04
     - B00070QF16
     - B079Z9JQX7
-   # - quant: 48
+    - B01I9TJ0PY
+    - B076KZ99BY
     - B00SV9AUVG
-   # - quant: 52
-   # - quant: 104
+    - B07ML4G6C2
 - name: Soap
   asins:
+    - B002RB1FDQ
     - B01BS59A6A
-   # - quant: 6.3 oz.
-   # - quant: 9.45 oz.
-   # - quant: 12.6 oz.
-   # - quant: 15.75 oz.
-   # - quant: 18.9 oz.
+    - B01BS59B8W
+    - B01BS59C4K
+    - B01BS59D4E
+    - B01BS59E6G
     - B004SNHP3A
-   # - quant: 31.5 oz.
+    - B01IADX0ZA
     - B00I69SBZ8
     - B01N36X33D
     - B005HO0AR2
@@ -286,10 +286,10 @@ products: # Amazon ASINs
     - B00W4TWDL4
     - B01IA9C3TI
     - B01KCJE874
-   # - quant: 90 oz.
-   # - quant: 126 oz.
+    - B01IA9CAJG
+    - B01IA9CFDW
     - B077G4N5YX
-   # - quant: 216 oz.
+    - B01IA9CX1Q
     - B0087W54A4
     - B000VAWY7Q
     - B01IAF26IA
@@ -301,8 +301,8 @@ products: # Amazon ASINs
 - name: Plant Fertilizer
   asins:
     - B015KZCBJC
-   # - quant: 10 oz.
-   # - quant: 20 oz.
+    - B011HXV49O
+    - B015KZD2TU
     - B005BV29D4
     - B003SHEDQY
     - B0034LPWVY
@@ -320,30 +320,30 @@ products: # Amazon ASINs
     - B000F6XGZ0
     - B00GWJRU38
     - B000P6QYJK
-   # - quant: 2 lb.
+    - B07VF9J3GF
    # - quant: 3 lb.
-   # - quant: 5 lb.
+    - B000P6QYJK
     - B07DR32CMB
 - name: Grass Seed
   asins:
+    - B00CTKM4N0
+    - B07FFBR7TH
+    - B01KBZV6EW
     - B01KBYTEY2
-   # - quant: 2 lb.
-   # - quant: 3 lb.
-   # - quant: 7 lb.
-   # - quant: 25 lb.
+    - B003AYWG46
     - B07Q4QW61K
     - B004QB0AHC
-   # - quant: 20 lb.
+    - B07KR19KDS
     - B07B4WSZT1
-   # - quant: 8 lb.
-   # - quant: 18 lb.
+    - B07B4WNSYX
+    - B07B4WJVC4
+    - B0002FZAV2
     - B00NHOZ3QC
-   # - quant: 7 lb.
-   # - quant: 20 lb.
-   # - quant: 40 lb
+    - B00CA42ULQ
+    - B00F8KLA38
     - B07SM141CR
-   # - quant: 7 lb.
-   # - quant: 20 lb.
+    - B07SP5ZQSP
+    - B07SJTT2Z3
 - name: Paper
   asins:
     - B004SU52JW
@@ -351,66 +351,66 @@ products: # Amazon ASINs
     - B009NKSNOI
     - B000CD0U82
     - B01FV0F8H8
-   # - quant: 1500
-   # - quant: 2500
-   # - quant: 4000
-   # - quant: 5000
+    - B01FV0F75G
+    - B01FV0F5HG
+    - B07K8WHH5J
+    - B01FV0F13E
     - B00007E7RI
-   # - quant: 4000
-   # - quant: 5000
-   # - quant: 200000
-   # - quant: 4200000
+    - B07YP5HWL2
+    - B008KPAB74
+    - B01LXLDBBO
+    - B01M1HXVOH
     - B0090YJBYS
-   # - quant: 1500
-   # - quant: 2500
-   # - quant: 5000
-   # - quant: 200000
+    - B01FIK0PXI
+    - B07GDS6W4W
+    - B004YC0XZC
+    - B0776VT3N4
     - B01NAQ3Y6D
-   # - quant: 1500
-   # - quant: 2500
-   # - quant: 5000
-   # - quant: 200000
+    - B00OL06L7G
+    - B006TIKR5A
+    - B0007KLJ1W
+    - B01GS68CB8
     - B00IVOMMHQ
-   # - quant: 1500
-   # - quant: 2400
+    - B079DFWHNL
+    - B00U03707S
    # - quant: 3000
-   # - quant: 200000
-   # - quant: 4200000
+    - B079KP7KNG
+    - B01E6S4MZK
    # - quant: None
 - name: Pens
   asins:
     - B019QBOAH2
     - B019QBOG3U
     - B019QBOG44
-   # - quant: 28
-   # - quant: 40
-   # - quant: 42
-   # - quant: 60
+    - B083RZV2L9
+    - B083RZR5D2
+    - B083RZYDRH
+    - B083RZVTWV
     - B01EB75NY0
    # - quant: 24
-   # - quant: 36
-   # - quant: 48
+    - B01EB6N5K0
+    - B07DJ43MCC
    # - quant: 72
    # - quant: 96
    # - quant: 120
     - B002JP1AH6
-   # - quant: 9
+    - B002JP1AH6
     - B001CRVUPE
     - B001GAOTSW
-   # - quant: 2
-   # - quant: 4
-   # - quant: 5
-   # - quant: 8
-   # - quant: 10
-   # - quant: 12
-   # - quant: 36
-   # - quant: 48
+    - B000T9Q6E6
+    - B0030F32L6
+    - B0058NN4C0
+    - B07P5JTXPY
+    - B01HNNH1J4
+    - B001GAOTSW
+    - B00OCPFPK4
+    - B071FGN152
    # - quant: 144
     - B000GATVZE
-   # - quant: 72
+    - B07YCW9HZB
     - B00347A8NK
     - B0012YVGOW
-   # - quant: 120
+    - B07TJXD6XD
     - B06WGMTMVM
 - name: Envelopes
   asins:
@@ -423,12 +423,12 @@ products: # Amazon ASINs
    # - quant: 400
     - B078MSLGGP
     - B06X6B39G3
-   # - quant: 300
+    - B06X15WSLL
     - B01D0OANU4
-   # - quant: 500
+    - B07RCYHBY6
     - B001U2ORNS
     - B00Q1W2B7Q
-   # - quant: 160
+    - B01AVVETF4
     - B004E2PHTE
     - B01FT472UM
     - B01HQT2SDY
@@ -440,19 +440,19 @@ products: # Amazon ASINs
 - name: Motor Oil
   asins:
     - B07CFMZ1F5
-   # - quant: 6 QT
+    - B07CFMZ1F5
     - B00GDH5M1G
-   # - quant: 5 QT
-   # - quant: 6 QT
-   # - quant: 15 QT
+    - B00AM1Z67O
+    - B00DJ4FF18
+    - B07NLWXZDG
     - B00GDH0GDA
-   # - quant: 5 QT
-   # - quant: 6 QT
-   # - quant: 15 QT
+    - B008QDXADW
+    - B00DJ4FEV4
+    - B07NLZWXZ4
     - B00TS9ZYWI
-   # - quant: 6 QT
-   # - quant: 15 QT
-   # - quant: 24 QT
+    - B00TS9ZYXC
+    - B00TS9ZYXW
+    - B00TS9ZZ04
     - B01536SWCS
     - B01MEGK821
     - B00CBT5HZ6
@@ -462,21 +462,21 @@ products: # Amazon ASINs
 - name: Light Bulbs
   asins:
     - B07JLZN1RM
-   # - quant: 6
-   # - quant: 16
-   # - quant: 24
+    - B07JMBV2DJ
+    - B07JMBT69Q
+    - B07SSBM16V
+    - B01B0M9XCC
+    - B01NCM63VM
     - B0758GXHQK
-   # - quant: 12
-   # - quant: 24
     - B071VFHXSY
-   # - quant: 16
+    - B07THBGYXT
     - B00P6XVHX0
-   # - quant: 12
+    - B07L51R5MF
     - B07QV9XLTK
-   # - quant: 2
-   # - quant: 4
+    - B07R2MQ2PY
+    - B07QWB3J8W
     - B01MXLLHDZ
-   # - quant: 4
-   # - quant: 6
+    - B06XDB8WM3
+    - B01N41928O
     - B07KK93VD9
     - B07RPQNP96

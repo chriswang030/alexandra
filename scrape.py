@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import time
 import random
 import logging
@@ -80,6 +81,9 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                         r = requests.get('https://amazon.com/dp/{}'.format(asin),
                                          headers=headers)
                         logging.error('Proxy failing... using local IP instead')
+                else:
+                    r = requests.get('https://amazon.com/dp/{}'.format(asin),
+                                     headers=headers)
 
                 soup = BeautifulSoup(r.content, 'lxml')
                 access_date = date.today()
@@ -157,20 +161,21 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
 
                 # save data
                 url = 'https://www.amazon.com/dp/{}'.format(asin)
-                data[category['name']][i] = [access_date,
-                                             ' ', # search term column
-                                             title,
-                                             '=HYPERLINK("{}","{}")'.format(url, url),
-                                             ' ', # quantity column
-                                             prime,
-                                             prime_price,
-                                             price,
-                                             shipping,
-                                             seller,
-                                             fulfiller,
-                                             rating,
-                                             n_ratings,
-                                             ' '] # packaging column
+                item_data = [access_date,
+                             ' ', # search term column
+                             title,
+                             '=HYPERLINK("{}","{}")'.format(url, url),
+                             ' ', # quantity column
+                             prime,
+                             prime_price,
+                             price,
+                             shipping,
+                             seller,
+                             fulfiller,
+                             rating,
+                             n_ratings,
+                             ' '] # packaging column
+                data[category['name']][i] = item_data
 
                 if any(x is None for x in data[category['name']][i]):
                     logging.error('Double-check this item!')
@@ -178,14 +183,20 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
 
                 if verbose:
                     print(data[category['name']][i])
+                print(data[category['name']][i])
 
                 # delay
                 time.sleep(random.random()*5+0.5)
-    except:
+
+            print(data[category['name']])
+
+    except Exception as e:
+        print(e)
         print('Data collected so far:')
         print(data)
         print('Errors collected so far:')
         print(error)
+        sys.exit()
 
     return data, error
 
@@ -204,7 +215,7 @@ def write_to_excel(file_name, data):
             writer.sheets = {ws.title: ws for ws in writer.book.worksheets}
 
             # write to sheet
-            df = pd.DataFrame.from_dict(data[sheet], orient='index')
+            df = pd.DataFrame.from_dict(data[sheet], orient='index', columns=data[sheet].keys())
             df.to_excel(writer, sheet_name=sheet, startrow=startrow,
                         index_label=False, index=False, header=False)
             for cell in writer.book[sheet]['D'][1:]:
