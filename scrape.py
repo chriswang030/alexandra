@@ -59,38 +59,48 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
     if do_proxies:
         proxy_pool = get_proxies(proxy_list, ip_check, max_proxies)
 
-    try:
-        for category in products:
-            data[category['name']] = {}
-            for i, asin in enumerate(category['asins']):
-                logging.info('Getting info for product {}...'.format(asin))
+    for category in products:
+        data[category['name']] = {}
+        for i, asin in enumerate(category['asins']):
+            logging.info('Getting info for product {}...'.format(asin))
 
-                # set ip/headers
-                if do_proxies:
-                    address = random.choice(proxy_pool)
-                    proxies = {'http': address, 'https': address}
+            try:
+                while True:
+                    # set ip/headers
+                    headers['user-agent'] = get_useragent(ua_pool)
+                    if do_proxies:
+                        address = random.choice(proxy_pool)
+                        proxies = {'http': address, 'https': address}
 
-                # make request
-                headers['user-agent'] = get_useragent(ua_pool)
-                if do_proxies:
-                    try:
-                        r = requests.get('https://amazon.com/dp/{}'.format(asin),
-                                         headers=headers,
-                                         proxies=proxies)
-                    except:
+                    # make request
+                    if do_proxies:
+                        try:
+                            r = requests.get('https://amazon.com/dp/{}'.format(asin),
+                                             headers=headers,
+                                             proxies=proxies)
+                        except:
+                            r = requests.get('https://amazon.com/dp/{}'.format(asin),
+                                             headers=headers)
+                            logging.error('Proxy failing... using local IP instead')
+                    else:
                         r = requests.get('https://amazon.com/dp/{}'.format(asin),
                                          headers=headers)
-                        logging.error('Proxy failing... using local IP instead')
-                else:
-                    r = requests.get('https://amazon.com/dp/{}'.format(asin),
-                                     headers=headers)
 
-                soup = BeautifulSoup(r.content, 'lxml')
-                access_date = date.today()
+                    soup = BeautifulSoup(r.content, 'lxml')
+                    access_date = date.today()
 
-                if verbose:
-                    print(r.content)
-                    print()
+                    if verbose:
+                        print(r.content)
+                        print()
+
+                    # check CAPTCHA detection
+                    captcha = soup.find('title')
+                    if captcha is not None and captcha.text == 'Robot Check':
+                        logging.error('Robot detected! Please do the CAPTCHA in browser...')
+                        input('Press any key to continue (press Ctrl-C to quit)...')
+                        continue
+
+                    break
 
                 # search html
                 title = soup.find('span', attrs={'id': 'productTitle'})
@@ -102,6 +112,7 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                 merchant = soup.find('div', attrs={'id': 'merchant-info'})
                 rating = soup.find('span', attrs={'id': 'acrPopover'})
                 n_ratings = soup.find('span', attrs={'id': 'acrCustomerReviewText'})
+                availability = soup.find('div', attrs={'id': 'availability'})
                 # missing quantity + packaging info
 
                 seller = None
@@ -147,9 +158,9 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                         seller = merchant[len('Ships from and sold by '):-1]
                         fulfiller = seller
                     else:
-                        i = merchant.find(' and ')
-                        seller = merchant[len('Sold by '):i]
-                        fulfiller = merchant[i+len(' and Fulfilled by '):-1]
+                        ind = merchant.find(' and ')
+                        seller = merchant[len('Sold by '):ind]
+                        fulfiller = merchant[ind+len(' and Fulfilled by '):-1]
                 if rating is not None:
                     rating = float(rating.attrs['title'].strip().split()[0])
                 else:
@@ -158,45 +169,43 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                     n_ratings = int(n_ratings.text.strip().split()[0].replace(',',''))
                 else:
                     n_ratings = 0
+                if availability is not None:
+                    availability = availability.text.strip()
+                    if availability == 'Currently Unavailable.':
+                        seller = 'UNAVAILABLE'
+                        fulfiller = 'UNAVAILABLE'
 
                 # save data
                 url = 'https://www.amazon.com/dp/{}'.format(asin)
-                item_data = [access_date,
-                             ' ', # search term column
-                             title,
-                             '=HYPERLINK("{}","{}")'.format(url, url),
-                             ' ', # quantity column
-                             prime,
-                             prime_price,
-                             price,
-                             shipping,
-                             seller,
-                             fulfiller,
-                             rating,
-                             n_ratings,
-                             ' '] # packaging column
-                data[category['name']][i] = item_data
+                data[category['name']][i] = [access_date,
+                                             ' ', # search term column
+                                             title,
+                                             '=HYPERLINK("{}","{}")'.format(url, url),
+                                             ' ', # quantity column
+                                             prime,
+                                             prime_price,
+                                             price,
+                                             shipping,
+                                             seller,
+                                             fulfiller,
+                                             rating,
+                                             n_ratings,
+                                             ' '] # packaging column
 
                 if any(x is None for x in data[category['name']][i]):
                     logging.error('Double-check this item!')
                     error.append(asin)
+                    print(r.content)
 
                 if verbose:
                     print(data[category['name']][i])
-                print(data[category['name']][i])
 
                 # delay
-                time.sleep(random.random()*5+0.5)
+                time.sleep(random.random()*3+0.25)
 
-            print(data[category['name']])
-
-    except Exception as e:
-        print(e)
-        print('Data collected so far:')
-        print(data)
-        print('Errors collected so far:')
-        print(error)
-        sys.exit()
+            except Exception as e:
+                logging.error(e)
+                error.append(asin)
 
     return data, error
 
@@ -215,7 +224,7 @@ def write_to_excel(file_name, data):
             writer.sheets = {ws.title: ws for ws in writer.book.worksheets}
 
             # write to sheet
-            df = pd.DataFrame.from_dict(data[sheet], orient='index', columns=data[sheet].keys())
+            df = pd.DataFrame.from_dict(data[sheet], orient='index')
             df.to_excel(writer, sheet_name=sheet, startrow=startrow,
                         index_label=False, index=False, header=False)
             for cell in writer.book[sheet]['D'][1:]:
@@ -266,15 +275,15 @@ if __name__ == '__main__':
                              args.proxy, config['proxy_list'], config['max_proxies'],
                              config['ip_check'])
 
-        if data is not None:
+        try:
             write_to_excel(data_file, data)
             logging.info('Scrape complete')
 
             print('\n*** Double-check these items***:')
             for e in error:
                 print('- {}'.format(e))
-        else:
-            logging.error('Could not write data')
+        except Exception as e:
+            logging.error(e)
             print('Data:')
             print(data)
             print('Errors:')
