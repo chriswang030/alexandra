@@ -10,7 +10,7 @@ import json
 import pandas as pd
 import argparse
 
-from datetime import date
+from datetime import date, datetime
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook
 from openpyxl.styles import colors, Font
@@ -79,9 +79,9 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                                              headers=headers,
                                              proxies=proxies)
                         except:
+                            logging.error('Proxy failing... using local IP instead')
                             r = requests.get('https://amazon.com/dp/{}'.format(asin),
                                              headers=headers)
-                            logging.error('Proxy failing... using local IP instead')
                     else:
                         r = requests.get('https://amazon.com/dp/{}'.format(asin),
                                          headers=headers)
@@ -98,9 +98,8 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                     if captcha is not None and captcha.text == 'Robot Check':
                         logging.error('Robot detected! Please do the CAPTCHA in browser...')
                         input('Press any key to continue (press Ctrl-C to quit)...')
-                        continue
-
-                    break
+                    else:
+                        break
 
                 # search html
                 title = soup.find('span', attrs={'id': 'productTitle'})
@@ -195,96 +194,126 @@ def scrape(products, headers, ua_pool, do_proxies=True, proxy_list=None, max_pro
                 if any(x is None for x in data[category['name']][i]):
                     logging.error('Double-check this item!')
                     error.append(asin)
-                    print(r.content)
 
                 if verbose:
                     print(data[category['name']][i])
+                    print()
 
                 # delay
                 time.sleep(random.random()*3+0.25)
 
             except Exception as e:
+                data[category['name']][i] = [None]*14
+                data[category['name']][i][2] = asin
                 logging.error(e)
                 error.append(asin)
 
+    if verbose:
+        print(json.dumps(data, default=str))
+
     return data, error
 
-def write_to_excel(file_name, data):
-    with pd.ExcelWriter(file_name, mode='a', date_format='m/d/yy') as writer:
-        for sheet in data:
-            # get first empty row
-            if sheet not in writer.book.sheetnames:
-                startrow = 0
-            else:
-                startrow = writer.book[sheet].max_row
-                for cell in writer.book[sheet]['A']:
-                    if cell.value is None:
-                        startrow = cell.row
+def write_to_excel(file_name, file_dir, data):
+    if file_name is None:
+        mode = 'w'
+        version = datetime.now().strftime('%m%d%y_%H%M%S')
+        file_name = os.path.join(version + '_output.xlsx')
+    else:
+        mode = 'a'
 
-            writer.sheets = {ws.title: ws for ws in writer.book.worksheets}
+    file_path = os.path.join(file_dir, file_name)
+    writer = pd.ExcelWriter(file_path, mode=mode, date_format='m/d/yy')
 
-            # write to sheet
-            df = pd.DataFrame.from_dict(data[sheet], orient='index')
-            df.to_excel(writer, sheet_name=sheet, startrow=startrow,
-                        index_label=False, index=False, header=False)
-            for cell in writer.book[sheet]['D'][1:]:
-                cell.font = Font(u='single', color=colors.BLUE)
+    for sheet in data:
+        # get first empty row
+        if sheet not in writer.book.sheetnames:
+            startrow = 0
+        else:
+            startrow = writer.book[sheet].max_row
+            for cell in writer.book[sheet]['A']:
+                if cell.value is None:
+                    startrow = cell.row
 
-        writer.save()
+        writer.sheets = {ws.title: ws for ws in writer.book.worksheets}
+
+        # deserialize date if from JSON
+        if data[sheet] and type(next(iter(data[sheet].values()))[0]) == str:
+            for v in data[sheet].values():
+                v[0] = datetime.strptime(v[0], '%Y-%M-%d').date()
+
+        # write to sheet
+        df = pd.DataFrame.from_dict(data[sheet], orient='index')
+        df.to_excel(writer, sheet_name=sheet, startrow=startrow,
+                    index_label=False, index=False, header=False)
+        for cell in writer.book[sheet]['D'][startrow:]:
+            cell.font = Font(u='single', color=colors.BLUE)
+
+    writer.save()
 
 if __name__ == '__main__':
     # argparse
     parser = argparse.ArgumentParser(description='Scrape! -Chris :)')
 
-    parser.add_argument('-d', '--debug', help='ASIN of single product')
     parser.add_argument('-p', '--proxy', action='store_true', help='Use proxy rotation')
+    parser.add_argument('-n', '--new',   action='store_true', help='Create new Excel file')
+    parser.add_argument('-d', '--debug', help='ASIN of single product')
     parser.add_argument('-w', '--write', help='Write JSON data to file')
 
     args = parser.parse_args()
 
-    # logging
+    # logging config
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s.%(msecs)03d - %(levelname)s - %(message)s',
                         datefmt='%H:%M:%S')
 
-    # load config
-    logging.info('Loading config file')
+    # set current working directory
     cwd = os.path.dirname(os.path.realpath(__file__))
-    config_file = os.path.join(cwd, 'config.yml')
-    with open(config_file, 'r') as f:
-        config = yaml.safe_load(f)
 
-    # load useragents
-    logging.info('Loading useragent file')
-    with open(os.path.join(cwd, config['uagents']), 'r') as f:
-        ua_pool = [line.strip() for line in f]
-
-    # get data file path
-    data_file = os.path.join(cwd, config['data_file'])
-
-    logging.info('Beginning scrape...')
+    # set write location
+    if args.new:
+        data_file_name = None
+    else:
+        data_file_name = config['data_file']
 
     if args.write:
-        write_to_excel(data_file, json.loads(args.write))
-    elif args.debug: # test
-        data, error = scrape([{'name':'test','asins':[args.debug]}],
-                             config['headers'], ua_pool, args.proxy, config['proxy_list'],
-                             1, config['ip_check'], verbose=True)
-    else: # no proxies
-        data, error = scrape(config['products'], config['headers'], ua_pool,
-                             args.proxy, config['proxy_list'], config['max_proxies'],
-                             config['ip_check'])
+        logging.info('Writing JSON data...')
+        write_to_excel(data_file_name, cwd, json.loads(args.write))
+        logging.info('Write complete')
+    else:
+        # load config
+        logging.info('Loading config file')
+        config_file = os.path.join(cwd, 'config.yml')
+        with open(config_file, 'r') as f:
+            config = yaml.safe_load(f)
 
-        try:
-            write_to_excel(data_file, data)
-            logging.info('Scrape complete')
+        # load useragents
+        logging.info('Loading useragent file')
+        with open(os.path.join(cwd, config['uagents']), 'r') as f:
+            ua_pool = [line.strip() for line in f]
 
-            print('\n*** Double-check these items***:')
-            for e in error:
-                print('- {}'.format(e))
-        except Exception as e:
-            logging.error(e)
-            print('Data:')
-            print(data)
-            print('Errors:')
-            print(error)
+        # scrape
+        logging.info('Beginning scrape...')
+        if args.debug:
+            data, error = scrape([{'name':'debug','asins':[args.debug]}],
+                                  config['headers'], ua_pool, args.proxy,
+                                  config['proxy_list'], 1, config['ip_check'],
+                                  verbose=True)
+        else:
+            data, error = scrape(config['products'], config['headers'], ua_pool,
+                                 args.proxy, config['proxy_list'],
+                                 config['max_proxies'], config['ip_check'])
+
+            # write to file
+            try:
+                write_to_excel(data_file_name, cwd, data)
+                logging.info('Scrape complete')
+
+                print('\n*** Double-check these items***:')
+                for e in error:
+                    print('- {}'.format(e))
+            except Exception as e:
+                logging.error(e)
+                print('Data:')
+                print(json.dumps(data))
+                print('Errors:')
+                print(error)
