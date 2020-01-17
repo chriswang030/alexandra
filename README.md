@@ -38,7 +38,7 @@ before continuing.
 
 To stop the program while running, use `Ctrl-C`.
 
-# options
+## options
 - `-p`/`--proxy`: The program will scrape for some free proxies to use when accessing
 Amazon, making it harder for them to detect the scraping. However, these proxies
 frequently don't work, so in general it's better not to use this option for now.

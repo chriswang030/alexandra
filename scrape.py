@@ -224,10 +224,23 @@ def write_to_excel(file_name, file_dir, data):
     file_path = os.path.join(file_dir, file_name)
     writer = pd.ExcelWriter(file_path, mode=mode, date_format='m/d/yy')
 
+    headers_font = Font(underline='single', bold=True)
+    hyperlink_font = Font(underline='single', color=colors.BLUE)
+
     for sheet in data:
-        # get first empty row
+        # get first empty row or make headers
         if sheet not in writer.book.sheetnames:
-            startrow = 0
+            # make headers
+            sheet_headers = ['Date', 'Amazon Search Term', 'Product Title',
+                             'URL', 'Quantity', 'Prime Or Not', 'Prime Price',
+                             'Non-Prime Price', 'Non-Prime Shipping',
+                             'Seller', 'Fulfilled By', 'Rating',
+                             'Number Of Ratings', 'Packaging']
+            writer.book.create_sheet(sheet)
+            writer.book[sheet].append(sheet_headers)
+            for cell in writer.book[sheet]['1'][:14]:
+                cell.font = headers_font
+            startrow = 1
         else:
             startrow = writer.book[sheet].max_row
             for cell in writer.book[sheet]['A']:
@@ -246,7 +259,7 @@ def write_to_excel(file_name, file_dir, data):
         df.to_excel(writer, sheet_name=sheet, startrow=startrow,
                     index_label=False, index=False, header=False)
         for cell in writer.book[sheet]['D'][startrow:]:
-            cell.font = Font(u='single', color=colors.BLUE)
+            cell.font = hyperlink_font
 
     writer.save()
 
