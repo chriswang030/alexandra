@@ -281,7 +281,13 @@ if __name__ == '__main__':
 
     # set current working directory
     cwd = os.path.dirname(os.path.realpath(__file__))
-
+    
+    # load config
+    logging.info('Loading config file')
+    config_file = os.path.join(cwd, 'config.yml')
+    with open(config_file, 'r') as f:
+        config = yaml.safe_load(f)
+    
     # set write location
     if args.new:
         data_file_name = None
@@ -293,12 +299,6 @@ if __name__ == '__main__':
         write_to_excel(data_file_name, cwd, json.loads(args.write))
         logging.info('Write complete')
     else:
-        # load config
-        logging.info('Loading config file')
-        config_file = os.path.join(cwd, 'config.yml')
-        with open(config_file, 'r') as f:
-            config = yaml.safe_load(f)
-
         # load useragents
         logging.info('Loading useragent file')
         with open(os.path.join(cwd, config['uagents']), 'r') as f:
